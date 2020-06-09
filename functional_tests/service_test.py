@@ -2,7 +2,7 @@ from unittest import TestCase
 
 PT_SVC_ADDR = 'http://0.0.0.0:5000/'
 
-from project.tests.common_api_tests import CommonAPITest
+from zendat.tests.common_api_tests import CommonAPITest
 
 
 class ServiceFunctionalTest(TestCase, CommonAPITest):

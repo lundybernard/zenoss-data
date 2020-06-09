@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from project.lib import hello_world
+from zendat.lib import hello_world
 
 
 class ProjectTests(TestCase):

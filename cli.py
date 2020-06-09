@@ -2,52 +2,16 @@ import argparse
 import logging
 from logging.config import dictConfig
 
-from project.lib import hello_world
+from logconf import logging_config
 
-
-# === LOGGING === #
-logging_config = dict(
-    version=1,
-    formatters={
-        'f': {'format':
-              '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'},
-        'thread_formatter': {
-            'format':
-            '%(asctime)s %(threadName)-12s %(levelname)-8s %(message)s'
-        }
-    },
-    handlers={
-        'h': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'f'
-        },
-        'thread_handler': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'thread_formatter'
-        }
-    },
-    loggers={
-        'root': {
-            'handlers': ['h'],
-            'level': logging.DEBUG
-        },
-        'mod': {
-            'handlers': ['h'],
-            'level': logging.DEBUG
-        },
-        'thread': {
-            'handlers': ['thread_handler'],
-            'level': logging.DEBUG
-        }
-    }
-)
+from zendat.lib import hello_world
 
 
 dictConfig(logging_config)
 log = logging.getLogger('root')
 
 
-class ProjectCLI(object):
+class ZenDatCLI(object):
 
     def __init__(self):
         p = argparse.ArgumentParser(
@@ -195,7 +159,7 @@ class ProjectCLI(object):
             log.setLevel(logging.ERROR)
 
     def start(self, args):
-        from project.server import start_server
+        from zendat.server import start_server
         start_server(host=args.host, port=args.port, debug=args.debug)
 
     def test(self, args):
@@ -211,7 +175,7 @@ class ProjectCLI(object):
         import os
         import signal
         from time import sleep
-        a = subprocess.Popen(['project', 'start'])
+        a = subprocess.Popen(['zendat', 'start'])
         sleep(0.5)
         self.test(args)
 

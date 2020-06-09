@@ -8,7 +8,7 @@ https://github.com/pypa/sampleproject
 from setuptools import setup, find_packages
 
 # get __version__ from _version.py
-from project._version import __version__
+from zendat._version import __version__
 
 # Get the long description from the relevant file
 #with open('DESCRIPTION.rst') as f:
@@ -21,7 +21,7 @@ with open('requirements.txt') as f:
 
 setup(
     # Application name:
-    name="project",
+    name="zendat",
 
     # Version number (initial):
     version=__version__,
@@ -39,7 +39,7 @@ setup(
     # entry points, to generate executables in python/bin/
     entry_points={
         "console_scripts":
-            ['project = cli:ProjectCLI']
+            ['zendat = cli:ZenDatCLI']
     },
 
     # Include additional files into the package
@@ -51,7 +51,7 @@ setup(
 
     #
     # license="LICENSE.txt",
-    description="utilities for automating project tasks",
+    description="utilities for automating zenoss data related tasks",
 
     long_description=long_description,
 
