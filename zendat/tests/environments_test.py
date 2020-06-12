@@ -1,4 +1,5 @@
 from unittest import TestCase
+from unittest.mock import patch
 
 from ..environments import get_environment
 import os
@@ -33,4 +34,20 @@ class TestEnvironments(TestCase):
         t.assertEqual(
             default_env['datadict']['url'],
             os.environ['DATA_DICT_URL']
+        )
+
+    def test_ENV_no_default_set(t):
+        os.environ.pop('DATA_DICT_KEY')
+        os.environ.pop('DATA_DICT_URL')
+
+        ENV = get_environment()
+        default_env = ENV['default']
+
+        t.assertEqual(
+            default_env['datadict']['api_key'],
+            'DEFAULT DATADICT KEY NOT PROVIDED'
+        )
+        t.assertEqual(
+            default_env['datadict']['url'],
+            'DEFAULT DATADICT URL NOT PROVIDED'
         )
