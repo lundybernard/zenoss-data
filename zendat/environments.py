@@ -9,7 +9,7 @@ def get_environment():
     with open(ENV_PATH) as env_file:
         ENV = yaml.load(env_file, Loader=yaml.BaseLoader)
 
-    ENV['default'] = {'dictionary': {'api_key': os.environ['DATA_DICT_KEY']}}
-    ENV['default']['dictionary']['url'] = os.environ['DATA_DICT_URL']
+    ENV['default'] = {'datadict': {'api_key': os.environ['DATA_DICT_KEY']}}
+    ENV['default']['datadict']['url'] = os.environ['DATA_DICT_URL']
 
     return ENV
