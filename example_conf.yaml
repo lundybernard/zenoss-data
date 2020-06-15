@@ -1,5 +1,7 @@
 
+default: example
+
 example:
-    dictionary:
+    datadict:
         api_key: example_dictionary_api_key
         url: https://api-example.zenoss.io/v1/dictionary

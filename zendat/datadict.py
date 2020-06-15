@@ -1,16 +1,19 @@
 import requests
 import json
 
-from .environments import get_environment
-
-ENV = get_environment()
-default_url = ENV['default']['datadict']['url']
-default_key = ENV['default']['datadict']['api_key']
+from .conf import get_config
 
 
-def get_metrics(url=default_url, api_key=default_key):
+def get_metrics(url=None, api_key=None) -> dict:
+    CONF = get_config()
+
+    if not url:
+        url = CONF[CONF['default']]['datadict']['url']
+    if not api_key:
+        api_key = CONF[CONF['default']]['datadict']['api_key']
 
     metrics_url = f'{url}/metrics'
+    print(f'get metrics from {url}')
     headers = {'zenoss-api-key': api_key}
 
     r = requests.get(metrics_url, headers=headers,)
