@@ -2,7 +2,7 @@ from unittest import TestCase, skip
 
 from zendat.tests.common_api_tests import CommonAPITest, DataDictTests
 
-from zendat.environments import get_environment
+from zendat.conf import get_config
 
 PT_SVC_ADDR = 'http://0.0.0.0:5000/'
 
@@ -12,9 +12,10 @@ class DataDictTest(TestCase, DataDictTests):
     These will execute queries against the default remote target
     '''
     def setUp(t):
-        ENV = get_environment()
-        t.url = ENV['default']['datadict']['url']
-        t.api_key = ENV['default']['datadict']['api_key']
+        CONF = get_config()
+        default = CONF['default']
+        t.url = CONF[default]['datadict']['url']
+        t.api_key = CONF[default]['datadict']['api_key']
 
 
 @skip('local service is not configured yet')
