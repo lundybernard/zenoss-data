@@ -1,6 +1,6 @@
 import requests
 
-from zendat.datadict import get_metrics
+from zendat.datadict import get_metrics, get_metric
 
 
 class DataDictTests(object):
@@ -44,6 +44,13 @@ class DataDictTests(object):
             data['totalCount'],
             str(len(data['metrics'])),
         )
+
+    def test_get_metric(t):
+        data = get_metrics(t.url, t.api_key)
+        ex = data['metrics'].pop()
+
+        ret = get_metric(ex['name'], t.url, t.api_key)
+        t.assertEqual(ret, ex)
 
 
 class CommonAPITest(object):
