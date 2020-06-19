@@ -10,7 +10,8 @@ def get_config(config_file=None):
     else:
         raise Exception(
             "Config File not specified:"
-            " set environment variable ZENDAT_CONFIG to config file path."
+            " set environment variable ZENDAT_CONFIG to config file path,"
+            " or speicfy a config file."
         )
 
     with open(CONF_PATH) as env_file:

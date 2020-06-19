@@ -1,15 +1,16 @@
-import requests
+'''This Test Suite targets the remote Metric Dictionary API
+It executes queries against the targeted remote server
+and verifies the response.
+It may be used to verify the validity of this application's api calls
+And as a diagnostic tool for the remote service.
+'''
 
-from zendat.datadict import get_metrics, get_metric
+from unittest import TestCase
+
+from zendat.datadict import MetricDictionaryClient
 
 
-class MetricDictionaryClientFunctionalTest(object):
-
-    def test_(t):
-        t.assertTrue(False)
-        
-
-class DataDictTests(object):
+class MetricDictionaryClientFunctionalTests(TestCase):
 
     def assertIsNumeric(t, str):
         try:
@@ -18,7 +19,8 @@ class DataDictTests(object):
             t.fail(f'"{str}" is not a numeric value')
 
     def test_get_metrics(t):
-        data = get_metrics(t.url, t.api_key)
+        mdc = MetricDictionaryClient()
+        data = mdc.get_metrics()
 
         # Metrics contains these Keys
         t.assertIn('metrics', data)
@@ -52,20 +54,9 @@ class DataDictTests(object):
         )
 
     def test_get_metric(t):
-        data = get_metrics(t.url, t.api_key)
+        mdc = MetricDictionaryClient()
+        data = mdc.get_metrics()
         ex = data['metrics'].pop()
 
-        ret = get_metric(ex['name'], t.url, t.api_key)
+        ret = mdc.get_metric(ex['name'])
         t.assertEqual(ret, ex)
-
-
-class CommonAPITest(object):
-    '''Define the API tests in their own inheritable class
-    so they may be reused in multiple test cases.
-    This was done to allow testing of the api in a container
-    and as local service.
-    '''
-
-    def test_compose_webservice_exists(self):
-        out = requests.get(self.service_address)
-        self.assertEqual(out.text, 'Hello World!')
