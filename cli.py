@@ -15,8 +15,8 @@ class ZenDatCLI(object):
 
     def __init__(self):
         p = argparse.ArgumentParser(
-            description='Utility for executing various pytorch_server tasks',
-            usage='pytorch_server [<args>] <command>'
+            description='Utility for executing various zenoss data queries',
+            usage='zendat [<args>] <command>'
         )
         p.set_defaults(func=p.print_help)
 
@@ -126,19 +126,38 @@ class ZenDatCLI(object):
             help='port on which the service service will be run'
         )
 
-        # example sub command
-        sub1 = commands.add_parser(
-            'sub1',
-            description='execute command sub1',
-            help='for details use sub1 --help'
+        # Data Dictionary commands
+        datadict = commands.add_parser(
+            'datadict',
+            description='execute data dictionary queries',
+            help='for details use datadict --help'
         )
-        sub1.set_defaults(func=self.sub1)
-
-        sub1.add_argument(
-            '-a', '--argument',
-            dest='argument',
+        datadict.set_defaults(func=datadict.print_help)
+        datadict.add_argument(
+            '-c', '--conf', '--config_file',
+            dest='config_file',
             default=None,
-            help='tell me what arg1 does',
+            help='specify a config file to get environment details from',
+        )
+        queries = datadict.add_subparsers(
+            dest='querys',
+            title='querys',
+            description='available data dictionary queries',
+        )
+        get_metrics = queries.add_parser(
+            'get_metrics',
+            description='get all metrics',
+            help='for details use get_metrics --help'
+        )
+        get_metrics.set_defaults(func=self.get_metrics)
+        get_metric = queries.add_parser(
+            'get_metric',
+            description='get a metric by name',
+            help='for details use get_metric --help'
+        )
+        get_metric.set_defaults(func=self.get_metric)
+        get_metric.add_argument(
+            'name', help='metric name to retrieve',
         )
 
         # Execute
@@ -196,5 +215,19 @@ class ZenDatCLI(object):
     def hello(self, args):
         print(hello_world())
 
-    def sub1(self, args):
-        print('sub1 example command')
+    # TODO:
+    ''' Add config_file option
+    Create a MetricDictionaryClient class to hold config options
+    And to collect the metric dictionary querys in
+    Add environment argument, to target a specific instance
+    '''
+    def get_metrics(self, args):
+        print('execute data dictionary get_metrics query')
+        from zendat.datadict import get_metrics
+        print(get_metrics())
+
+    def get_metric(self, args):
+        print(f'get data dictionary definition for metric: {args.name}')
+        # TEST: example AnalyticsApiCount
+        from zendat.datadict import get_metric
+        print(get_metric(args.name))
