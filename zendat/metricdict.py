@@ -54,9 +54,9 @@ def get_metrics(url=None, api_key=None) -> dict:
         CONF = get_config()
         if not url:
             CONF = get_config()
-            url = CONF[CONF['default']]['datadict']['url']
+            url = CONF[CONF['default']]['metric_dict']['url']
         if not api_key:
-            api_key = CONF[CONF['default']]['datadict']['api_key']
+            api_key = CONF[CONF['default']]['metric_dict']['api_key']
 
     metrics_url = f'{url}/metrics'
     headers = {'zenoss-api-key': api_key}
@@ -73,9 +73,9 @@ def get_metric(name: str, url=None, api_key=None) -> dict:
         CONF = get_config()
         if not url:
             CONF = get_config()
-            url = CONF[CONF['default']]['datadict']['url']
+            url = CONF[CONF['default']]['metric_dict']['url']
         if not api_key:
-            api_key = CONF[CONF['default']]['datadict']['api_key']
+            api_key = CONF[CONF['default']]['metric_dict']['api_key']
 
     metrics_url = f'{url}/metrics/{name}'
     headers = {'zenoss-api-key': api_key}

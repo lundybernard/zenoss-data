@@ -10,11 +10,11 @@ class TestConfiguration(TestCase):
         example_env = CONF['example']
 
         t.assertEqual(
-            example_env['datadict']['api_key'],
+            example_env['metric_dict']['api_key'],
             'example_dictionary_api_key'
         )
         t.assertEqual(
-            example_env['datadict']['url'],
+            example_env['metric_dict']['url'],
             'https://api-example.zenoss.io/v1/dictionary'
         )
 
@@ -26,10 +26,10 @@ class TestConfiguration(TestCase):
         default_env = CONF[CONF['default']]
 
         t.assertEqual(
-            default_env['datadict']['api_key'],
-            CONF['example']['datadict']['api_key']
+            default_env['metric_dict']['api_key'],
+            CONF['example']['metric_dict']['api_key']
         )
         t.assertEqual(
-            default_env['datadict']['url'],
-            CONF['example']['datadict']['url']
+            default_env['metric_dict']['url'],
+            CONF['example']['metric_dict']['url']
         )

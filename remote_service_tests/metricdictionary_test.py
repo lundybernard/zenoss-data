@@ -7,7 +7,7 @@ And as a diagnostic tool for the remote service.
 
 from unittest import TestCase
 
-from zendat.datadict import MetricDictionaryClient
+from zendat.metricdict import MetricDictionaryClient
 
 
 class MetricDictionaryClientFunctionalTests(TestCase):

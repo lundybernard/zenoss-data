@@ -3,9 +3,9 @@ from unittest.mock import Mock, patch
 
 import json
 
-from zendat.datadict import MetricDictionaryClient, get_metrics, get_metric
+from zendat.metricdict import MetricDictionaryClient, get_metrics, get_metric
 
-PATH = 'zendat.datadict'
+PATH = 'zendat.metricdict'
 
 
 class MetricDictionaryClientTest(TestCase):

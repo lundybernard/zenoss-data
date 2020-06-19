@@ -127,19 +127,19 @@ class ZenDatCLI(object):
         )
 
         # Data Dictionary commands
-        datadict = commands.add_parser(
-            'datadict',
+        metricdict = commands.add_parser(
+            'metricdict',
             description='execute data dictionary queries',
-            help='for details use datadict --help'
+            help='for details use metricdict --help'
         )
-        datadict.set_defaults(func=datadict.print_help)
-        datadict.add_argument(
+        metricdict.set_defaults(func=metricdict.print_help)
+        metricdict.add_argument(
             '-c', '--conf', '--config_file',
             dest='config_file',
             default=None,
             help='specify a config file to get environment details from',
         )
-        queries = datadict.add_subparsers(
+        queries = metricdict.add_subparsers(
             dest='querys',
             title='querys',
             description='available data dictionary queries',
@@ -223,11 +223,11 @@ class ZenDatCLI(object):
     '''
     def get_metrics(self, args):
         print('execute data dictionary get_metrics query')
-        from zendat.datadict import get_metrics
+        from zendat.metricdict import get_metrics
         print(get_metrics())
 
     def get_metric(self, args):
         print(f'get data dictionary definition for metric: {args.name}')
         # TEST: example AnalyticsApiCount
-        from zendat.datadict import get_metric
+        from zendat.metricdict import get_metric
         print(get_metric(args.name))
