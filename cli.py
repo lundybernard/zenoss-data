@@ -223,12 +223,6 @@ class ZenDatCLI(object):
     def hello(self, args):
         print(hello_world())
 
-    # TODO:
-    ''' Add config_file option
-    Create a MetricDictionaryClient class to hold config options
-    And to collect the metric dictionary querys in
-    Add environment argument, to target a specific instance
-    '''
     def get_metrics(self, args):
         print('execute data dictionary get_metrics query')
         from zendat.metricdict import MetricDictionaryClient
