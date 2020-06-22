@@ -14,29 +14,40 @@ log = logging.getLogger('root')
 class ZenDatCLI(object):
 
     def __init__(self):
-        p = argparse.ArgumentParser(
+        zendat = argparse.ArgumentParser(
             description='Utility for executing various zenoss data queries',
             usage='zendat [<args>] <command>'
         )
-        p.set_defaults(func=p.print_help)
-
-        p.add_argument(
+        zendat.set_defaults(func=zendat.print_help)
+        zendat.add_argument(
             '-v', '--verbose',
             help='enable INFO output',
             action='store_const',
             dest='loglevel',
             const=logging.INFO
         )
-        p.add_argument(
+        zendat.add_argument(
             '--debug',
             help='enable DEBUG output',
             action='store_const',
             dest='loglevel',
             const=logging.DEBUG,
         )
+        zendat.add_argument(
+            '-c', '--conf', '--config_file',
+            dest='config_file',
+            default=None,
+            help='specify a config file to get environment details from',
+        )
+        zendat.add_argument(
+            '-e', '--env', '--remote_environment',
+            dest='remote_environment',
+            default=None,
+            help='specify the remote environment to use fromthe config file',
+        )
 
         # Add a subparser to handle sub-commands
-        commands = p.add_subparsers(
+        commands = zendat.add_subparsers(
             dest='command',
             title='commands',
             description='valid commands',
@@ -126,30 +137,27 @@ class ZenDatCLI(object):
             help='port on which the service service will be run'
         )
 
-        # Data Dictionary commands
+        # Metric Dictionary Queries
         metricdict = commands.add_parser(
             'metricdict',
             description='execute data dictionary queries',
             help='for details use metricdict --help'
         )
         metricdict.set_defaults(func=metricdict.print_help)
-        metricdict.add_argument(
-            '-c', '--conf', '--config_file',
-            dest='config_file',
-            default=None,
-            help='specify a config file to get environment details from',
-        )
         queries = metricdict.add_subparsers(
             dest='querys',
             title='querys',
             description='available data dictionary queries',
         )
+        # Get All Metrics
         get_metrics = queries.add_parser(
             'get_metrics',
             description='get all metrics',
             help='for details use get_metrics --help'
         )
         get_metrics.set_defaults(func=self.get_metrics)
+
+        # Get Metric by Name
         get_metric = queries.add_parser(
             'get_metric',
             description='get a metric by name',
@@ -162,11 +170,11 @@ class ZenDatCLI(object):
 
         # Execute
         # get only the first command in args
-        args = p.parse_args()
+        args = zendat.parse_args()
         self.set_log_level(args)
         # execute function set for parsed command
         if not hasattr(self, args.func.__name__):
-            p.print_help()
+            zendat.print_help()
             exit(1)
         args.func(args)
         exit(0)
@@ -223,11 +231,17 @@ class ZenDatCLI(object):
     '''
     def get_metrics(self, args):
         print('execute data dictionary get_metrics query')
-        from zendat.metricdict import get_metrics
-        print(get_metrics())
+        from zendat.metricdict import MetricDictionaryClient
+        from zendat.conf import get_config
+        conf = get_config(config_file=args.config_file)
+        mdc = MetricDictionaryClient(conf=conf, env=args.remote_environment)
+        print(mdc.get_metrics())
 
     def get_metric(self, args):
         print(f'get data dictionary definition for metric: {args.name}')
         # TEST: example AnalyticsApiCount
-        from zendat.metricdict import get_metric
-        print(get_metric(args.name))
+        from zendat.metricdict import MetricDictionaryClient
+        from zendat.conf import get_config
+        conf = get_config(config_file=args.config_file)
+        mdc = MetricDictionaryClient(conf=conf, env=args.remote_environment)
+        print(mdc.get_metric(args.name))
