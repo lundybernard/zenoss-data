@@ -1,7 +1,7 @@
-# project template
-example python microservice project
+# Zenoss Data Client
+python Client and consumer microservice for zenoss data API's
 
-[![Build Status](https://travis-ci.org/lundybernard/zenoss-data.svg?branch=master)](https://travis-ci.org/lundybernard/zenoss-data)
+[![Build Status](https://travis-ci.org/lundybernard/zenoss-data.svg?branch=main)](https://travis-ci.org/lundybernard/zenoss-data)
 
 ## Installation
 install in developer mode from source
@@ -16,7 +16,7 @@ python setup.py develop
 start the web server on local host
 
 ```
-project start
+zendat start
 ```
 
 run tests against the web server
@@ -37,13 +37,13 @@ python setup.py develop
 start webserver with cli
 
 ```
-project start
+zendat start
 ```
 
 Run functional tests
 
 ```
-project test service
+zendat test service
 pytest functional_tests/service_test.py
 ```
 
@@ -72,7 +72,7 @@ pytest container_tests/container_test.py
 CLI
 
 ```
-project run_container_tests
+zendat run_container_tests
 
 
 
